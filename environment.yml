@@ -1,0 +1,11 @@
+name: pylopsfftw
+channels:
+  - defaults
+dependencies:
+  - python>=3.6.4
+  - numpy
+  - scipy
+  - matplotlib
+  - jupyter
+  - pip:
+    - Cython
