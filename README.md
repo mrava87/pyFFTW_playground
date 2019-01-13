@@ -9,25 +9,14 @@ Create environment:
 make install_conda
 ```
 
-Install fftw:
-```
-brew install fftw --with-openmp
-```
-
-Finally install pyfftw:
+Install pyfftw:
 
 * option 1: local install, see ``LOCALINSTALL.md`` file
 * option 2:
     ```
-    export DYLD_LIBRARY_PATH=/usr/local/lib
-    export LDFLAGS="-L/usr/local/lib"
-    export CFLAGS="-I/usr/local/include"
-    ```
-    followed by
-    ```
     pip install pyfftw
     ```
-    or
+* option 3:
     ```
     conda install -c conda-forge pyfftw
     ```

@@ -1,3 +1,8 @@
+Install fftw:
+```
+brew install fftw --with-openmp
+```
+
 From the root directory of this repo:
 ```
 cd ..
