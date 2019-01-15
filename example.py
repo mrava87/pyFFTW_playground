@@ -24,16 +24,11 @@ if __name__ == "__main__":
 	print('MKL_NUM_THREADS', os.environ.get('MKL_NUM_THREADS'))
 	
 	# check results
-	"""
 	for dir  in ['', 'i']:
 		print('Forward' if dir=='' else 'Inverse')
 		for ndims in [1,2,3]:
-			print("\n%i-dimensional arrays" % ndims)
-			print(" ".join(["%17s" % n for n in ("n","sp","np","fftw")]))
-		
 			for ii in range(2, 15-ndims*2):
-				
-				
+
 				array = np.random.random([2**ii]*ndims)
 				outnp=npfftn(array, axis=-1)
 				outsp=spfftn(array, axis=-1)
@@ -42,10 +37,10 @@ if __name__ == "__main__":
 				outarray = array.copy();
 				fft_forward = pyfftw.FFTW(array,outarray, axes=(-1,), direction='FFTW_FORWARD', flags=['FFTW_ESTIMATE'], threads=4)
 				outw=wfftn(fft_forward)
-				
-				print(outnp-outw)
-				print(outsp-outw)
-	"""
+
+				print("\n%i-dimensional arrays" % ndims)
+				print('np-fftw',np.linalg.norm(outnp-outw))
+				print('sp-fftw',np.linalg.norm(outsp-outw))
 
 	# check speed
 	for dir  in ['', 'i']:
@@ -56,16 +51,16 @@ if __name__ == "__main__":
 		
 			for ii in range(2, 15-ndims*2):
 				
-				setup="import test_ffts; import numpy as np; array = np.random.random([%i]*%i)" % (2**ii,ndims)
-				setup1="import test_ffts; import numpy as np; import pyfftw;"\
+				setup="import example; import numpy as np; array = np.random.random([%i]*%i)" % (2**ii,ndims)
+				setup1="import example; import numpy as np; import pyfftw;"\
 					  "array = np.random.random([%i]*%i);"\
 					  "array = array.astype('complex'); outarray = array.copy();"\
 					  "fft_forward = pyfftw.FFTW(array,outarray, direction='FFTW_FORWARD', flags=['FFTW_ESTIMATE'], threads=4)" % (2**ii,ndims)
 			
 				print("%16i:" % (int(2**ii)) + \
 						"".join(
-							["%17f" % (min(timeit.Timer(stmt="test_ffts.%s%sfftn(array)" % (ffttype, dir), setup=setup).repeat(3,10))) for ffttype in ('sp','np')] + 
-							["%17f" % (min(timeit.Timer(stmt="test_ffts.%s%sfftn(fft_forward)" % (ffttype, dir), setup=setup1).repeat(3,10))) for ffttype in ('w')]
+							["%17f" % (min(timeit.Timer(stmt="example.%s%sfftn(array)" % (ffttype, dir), setup=setup).repeat(3,10))) for ffttype in ('sp','np')] +
+							["%17f" % (min(timeit.Timer(stmt="example.%s%sfftn(fft_forward)" % (ffttype, dir), setup=setup1).repeat(3,10))) for ffttype in ('w')]
 						))
                 
 """
