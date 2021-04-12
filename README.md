@@ -27,7 +27,7 @@ A python script called ``benchmark.py`` can be used to benchmark the speed of di
 Run the script in the following way
 
 ```
-python performance.py computer fft 10
+python benchmark.py computer fft 10
 ```
 where you can specify your computer name (eg ``mac_book_air_1_3_GHz_Intel_Core_i5``), if you want to use
 numpy fft (``fft``) or fftpack (``fftpack``) - the first using MKL if installed with conda, the second being the slower if MKL
